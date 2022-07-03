@@ -23,5 +23,7 @@ export class OrganizationManagementService {
 
   update(id: number, {}) {}
 
-  remove(id: number) {}
+  remove(id: number) {
+    return this.organization.delete(id);
+  }
 }

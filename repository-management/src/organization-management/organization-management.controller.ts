@@ -46,5 +46,10 @@ export class OrganizationManagementController {
   ) {}
 
   @Delete(':id')
-  remove(@Param('id') id: string) {}
+  async remove(@Param('id', ParseIntPipe) id: number) {
+    const deleted = await this.organizationManagementService.remove(id);
+
+    if (deleted.affected === 0)
+      throw new NotFoundException(`Organization with id ${id} not exist!`);
+  }
 }
