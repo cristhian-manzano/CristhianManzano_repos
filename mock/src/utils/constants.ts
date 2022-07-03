@@ -1,0 +1,5 @@
+export const STATUSES_REPOSITORIES = {
+  VERIFIED: 604,
+  WAITING: 605,
+  APPROVED: 606,
+};
