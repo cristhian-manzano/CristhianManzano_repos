@@ -1,10 +1,21 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+
+import { Organization } from '../entities/organization.entity';
 
 @Injectable()
 export class OrganizationManagementService {
+  constructor(
+    @InjectRepository(Organization)
+    private readonly organization: Repository<Organization>,
+  ) {}
+
   create(createOrganizationManagementDto: {}) {}
 
-  findAll() {}
+  findAll() {
+    return this.organization.find();
+  }
 
   findOne(id: number) {}
 

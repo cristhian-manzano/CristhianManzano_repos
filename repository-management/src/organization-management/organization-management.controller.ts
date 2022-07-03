@@ -6,6 +6,8 @@ import {
   Patch,
   Param,
   Delete,
+  ParseIntPipe,
+  NotFoundException,
 } from '@nestjs/common';
 import { OrganizationManagementService } from './organization-management.service';
 import { CreateOrganizationManagementDto } from './dto/create-organization-management.dto';
@@ -23,7 +25,9 @@ export class OrganizationManagementController {
   ) {}
 
   @Get()
-  findAll() {}
+  async findAll() {
+    return this.organizationManagementService.findAll();
+  }
 
   @Get(':id')
   findOne(@Param('id') id: string) {}
