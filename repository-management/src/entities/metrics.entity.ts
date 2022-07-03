@@ -1,7 +1,14 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { Repository } from './repository.entity';
 
 @Entity({ name: 'metrics' })
-export class Metrics {
+export class Metric {
   @PrimaryGeneratedColumn()
   id_repository: number;
 
@@ -19,4 +26,11 @@ export class Metrics {
 
   @Column()
   code_smells: number;
+
+  @OneToOne(() => Repository)
+  @JoinColumn({
+    name: 'id_repository',
+    referencedColumnName: 'id_repository',
+  })
+  repository: Repository;
 }
