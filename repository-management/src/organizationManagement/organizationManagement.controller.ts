@@ -9,9 +9,8 @@ import {
   ParseIntPipe,
   NotFoundException,
 } from '@nestjs/common';
-import { OrganizationManagementService } from './organization-management.service';
-import { CreateOrganizationManagementDto } from './dto/create-organization-management.dto';
-import { UpdateOrganizationManagementDto } from './dto/update-organization-management.dto';
+
+import { OrganizationManagementService } from './organizationManagement.service';
 
 @Controller('organization')
 export class OrganizationManagementController {
@@ -20,9 +19,7 @@ export class OrganizationManagementController {
   ) {}
 
   @Post()
-  create(
-    @Body() createOrganizationManagementDto: CreateOrganizationManagementDto,
-  ) {}
+  create(@Body() createOrganizationManagementDto: {}) {}
 
   @Get()
   async findAll() {
@@ -42,7 +39,7 @@ export class OrganizationManagementController {
   @Patch(':id')
   update(
     @Param('id') id: string,
-    @Body() updateOrganizationManagementDto: UpdateOrganizationManagementDto,
+    @Body() updateOrganizationManagementDto: {},
   ) {}
 
   @Delete(':id')
