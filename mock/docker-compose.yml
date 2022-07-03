@@ -1,0 +1,21 @@
+version: "3.9"
+
+services:
+  mock-app:
+    container_name: mock-app
+    restart: always
+    env_file: .env
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - ${APP_PORT}:${APP_PORT}
+    environment:
+      - NODE_ENV=production
+    networks:
+      - mock-network
+
+networks:
+  mock-network:
+    name: mock-network
+
