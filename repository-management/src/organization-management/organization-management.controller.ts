@@ -13,7 +13,7 @@ import { OrganizationManagementService } from './organization-management.service
 import { CreateOrganizationManagementDto } from './dto/create-organization-management.dto';
 import { UpdateOrganizationManagementDto } from './dto/update-organization-management.dto';
 
-@Controller('organization-management')
+@Controller('organization')
 export class OrganizationManagementController {
   constructor(
     private readonly organizationManagementService: OrganizationManagementService,
@@ -30,7 +30,14 @@ export class OrganizationManagementController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {}
+  async findOne(@Param('id', ParseIntPipe) id: number) {
+    const organization = await this.organizationManagementService.findOne(id);
+
+    if (!organization)
+      throw new NotFoundException(`Organization with id ${id} not found!`);
+
+    return organization;
+  }
 
   @Patch(':id')
   update(

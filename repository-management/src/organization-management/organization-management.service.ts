@@ -17,7 +17,9 @@ export class OrganizationManagementService {
     return this.organization.find();
   }
 
-  findOne(id: number) {}
+  findOne(id: number) {
+    return this.organization.findOneBy({ id_organization: id });
+  }
 
   update(id: number, {}) {}
 
