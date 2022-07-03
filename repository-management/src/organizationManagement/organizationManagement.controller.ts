@@ -13,6 +13,8 @@ import {
 import { CreateOrganizationDto } from './dto/createOrganizationDto';
 
 import { OrganizationManagementService } from './organizationManagement.service';
+import { Organization } from '../entities/organization.entity';
+import { UpdateOrganizationDto } from './dto/updateOrganizationDto';
 
 @Controller('organization')
 export class OrganizationManagementController {
@@ -34,19 +36,16 @@ export class OrganizationManagementController {
 
   @Get(':id')
   async findOne(@Param('id', ParseIntPipe) id: number) {
-    const organization = await this.organizationManagementService.findOne(id);
-
-    if (!organization)
-      throw new NotFoundException(`Organization with id ${id} not found!`);
-
-    return organization;
+    return this.organizationManagementService.findOne(id);
   }
 
   @Patch(':id')
   update(
-    @Param('id') id: string,
-    @Body() updateOrganizationManagementDto: {},
-  ) {}
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updateOrganizationDto: UpdateOrganizationDto,
+  ) {
+    return this.organizationManagementService.update(id, updateOrganizationDto);
+  }
 
   @Delete(':id')
   async remove(@Param('id', ParseIntPipe) id: number) {

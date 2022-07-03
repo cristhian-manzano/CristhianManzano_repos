@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
 import { Organization } from '../entities/organization.entity';
+import { CreateOrganizationDto } from './dto/createOrganizationDto';
 import { UpdateOrganizationDto } from './dto/updateOrganizationDto';
 
 @Injectable()
@@ -12,12 +13,26 @@ export class OrganizationManagementService {
     private readonly organization: Repository<Organization>,
   ) {}
 
-  create(createOrganizationManagementDto: {}) {}
+  async create(createOrganizationManagementDto: CreateOrganizationDto) {
+    return this.organization.save({
+      name: createOrganizationManagementDto.name,
+      status: createOrganizationManagementDto.status,
+    });
+  }
 
   findAll() {
     return this.organization.find();
   }
 
+  async findOne(id: number) {
+    const organization = this.organization.findOneBy({ id_organization: id });
+
+    if (!organization) {
+      throw new NotFoundException(`Organization with id ${id} not found!`);
+    }
+
+    return organization;
+  }
 
   async update(
     id: number,
@@ -27,7 +42,7 @@ export class OrganizationManagementService {
 
     if (!organization) {
       throw new NotFoundException('Organization does not exists!');
-  }
+    }
 
     const updatedOrganization = Object.assign(
       organization,
