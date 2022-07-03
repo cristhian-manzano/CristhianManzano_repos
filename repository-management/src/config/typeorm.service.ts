@@ -3,6 +3,9 @@ import { ConfigService } from '@nestjs/config';
 import { TypeOrmOptionsFactory, TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { URLSearchParams } from 'url';
 import { Organization } from '../entities/organization.entity';
+import { Tribe } from '../entities/tribe.entity';
+import { Repository } from '../entities/repository.entity';
+import { Metric } from '../entities/metrics.entity';
 
 @Injectable()
 export class TypeOrmConfigService implements TypeOrmOptionsFactory {
@@ -17,7 +20,7 @@ export class TypeOrmConfigService implements TypeOrmOptionsFactory {
       url: databaseUrl,
       ssl: true,
       extra: { options: urlParams.get('options') },
-      entities: [Organization],
+      entities: [Organization, Tribe, Repository, Metric],
     };
   }
 }
