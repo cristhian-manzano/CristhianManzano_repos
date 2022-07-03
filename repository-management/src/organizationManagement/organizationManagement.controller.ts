@@ -10,6 +10,8 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 
+import { CreateOrganizationDto } from './dto/createOrganizationDto';
+
 import { OrganizationManagementService } from './organizationManagement.service';
 
 @Controller('organization')
@@ -19,7 +21,11 @@ export class OrganizationManagementController {
   ) {}
 
   @Post()
-  create(@Body() createOrganizationManagementDto: {}) {}
+  async create(
+    @Body() createOrganizationDto: CreateOrganizationDto,
+  ): Promise<Organization> {
+    return this.organizationManagementService.create(createOrganizationDto);
+  }
 
   @Get()
   async findAll() {
