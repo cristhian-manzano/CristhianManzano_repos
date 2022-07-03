@@ -6,6 +6,7 @@ import cors from 'cors';
 import Logger from './configs/logger';
 import morganMiddleware from './configs/morgan';
 import Routes from './routes';
+import { errorResponse } from './utils/responses';
 
 dotenv.config();
 const app = express();
@@ -20,7 +21,9 @@ app.use('/api', Routes);
 
 app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
   Logger.error(err);
-  return res.status(500).send('Internal server error!');
+  return res
+    .status(500)
+    .json(errorResponse(res.statusCode, 'Internal server error!'));
 });
 
 const PORT = process.env.APP_PORT ?? 3000;
