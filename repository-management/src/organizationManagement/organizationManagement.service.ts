@@ -1,8 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
 import { Organization } from '../entities/organization.entity';
+import { UpdateOrganizationDto } from './dto/updateOrganizationDto';
 
 @Injectable()
 export class OrganizationManagementService {
@@ -17,11 +18,24 @@ export class OrganizationManagementService {
     return this.organization.find();
   }
 
-  findOne(id: number) {
-    return this.organization.findOneBy({ id_organization: id });
+
+  async update(
+    id: number,
+    updateOrganizationDto: Partial<UpdateOrganizationDto>,
+  ) {
+    const organization = await this.findOne(id);
+
+    if (!organization) {
+      throw new NotFoundException('Organization does not exists!');
   }
 
-  update(id: number, {}) {}
+    const updatedOrganization = Object.assign(
+      organization,
+      updateOrganizationDto,
+    );
+
+    return this.organization.save(updatedOrganization);
+  }
 
   remove(id: number) {
     return this.organization.delete(id);
