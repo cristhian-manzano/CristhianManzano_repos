@@ -1,11 +1,11 @@
 import { Controller, Get, Param, ParseIntPipe } from '@nestjs/common';
 import { MetricsService } from './metrics.service';
 
-@Controller('metrics')
+@Controller('tribe')
 export class MetricsController {
   constructor(private readonly metricsService: MetricsService) {}
 
-  @Get(':id')
+  @Get(':id/repository')
   async getRepositoryMetrics(@Param('id', ParseIntPipe) id: number) {
     const tribeRepositories =
       await this.metricsService.getMetricRepositoryByTribe(id);
