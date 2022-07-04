@@ -23,30 +23,26 @@ export class MetricsService {
       .leftJoinAndSelect(
         'tribe.repositories',
         'repository',
-        'repository.state = :state',
-        { state: 'A' }, // ! Set a Constant
+        'repository.state = :state AND extract(YEAR from repository.create_time) = :date',
+        { state: 'E', date: new Date().getFullYear() },
       )
       .leftJoinAndSelect(
         'repository.metric',
         'metrics',
         'metrics.coverage > :percentage',
-        { percentage: 30 }, // ! Set a Constant
+        { percentage: 75 },
       )
-      .where('tribe.id_tribe = :id', { id: idTribe }) // !id Must be a number
+      .where('tribe.id_tribe = :id', { id: idTribe })
       .getOne();
 
-    if (!tribeRepositories) {
+    if (!tribeRepositories)
       throw new NotFoundException('La Tribu no se encuentra registrada');
-    }
 
     // Get repositories that have metrics with minim coverage allowed
     const tribeRepositoriesWithMinCoverage =
       tribeRepositories.repositories.filter((repository) => repository.metric);
 
-    if (
-      tribeRepositories.repositories.length > 0 &&
-      tribeRepositoriesWithMinCoverage.length === 0
-    ) {
+    if (tribeRepositoriesWithMinCoverage.length === 0) {
       throw new NotFoundException(
         'La Tribu no tiene repositorios que cumplan con la cobertura necesaria.',
       );
