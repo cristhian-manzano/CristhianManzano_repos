@@ -5,6 +5,7 @@ import { Repository } from 'typeorm';
 import { TribeRepository } from './interfaces/tribeRepository';
 import { HttpService } from '@nestjs/axios';
 import { ConfigService } from '@nestjs/config';
+import { REPOSITORY } from 'src/common/constants';
 
 @Injectable()
 export class MetricsService {
@@ -82,8 +83,8 @@ export class MetricsService {
         bugs: tribeRepository.metric.bugs,
         vulnerabilities: tribeRepository.metric.vulnerabilities,
         hotspots: tribeRepository.metric.hotspot,
-        verificationState: state,
-        state: tribeRepository.state,
+        verificationState: REPOSITORY.VERIFICATION_STATE[state],
+        state: REPOSITORY.STATE[tribeRepository.state],
       };
     });
   }
