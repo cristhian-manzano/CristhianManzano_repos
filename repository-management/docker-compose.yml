@@ -1,8 +1,8 @@
 version: "3.9"
 
 services:
-  mock-app:
-    container_name: mock-app
+  repository-management:
+    container_name: repository-management
     restart: always
     env_file: .env
     build:
@@ -18,3 +18,4 @@ services:
 networks:
   ntt-network:
     name: ntt-network
+
