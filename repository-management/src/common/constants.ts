@@ -10,10 +10,4 @@ export const REPOSITORY = {
     D: 'Deshabilitado',
     A: 'Archivado',
   },
-
-  STATUS: {
-    E: 'Habilitado',
-    D: 'Deshabilitado',
-    A: 'Archivado',
-  },
 };
